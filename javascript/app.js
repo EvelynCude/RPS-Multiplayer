@@ -18,34 +18,61 @@ $("#game-info").hide();
   database.ref("turn").onDisconnect().remove();
   database.ref("chat").onDisconnect().remove();
 
-
-
   console.log(database);
+
+// database.ref("players") used frequently.... store in variable
+  var playerRef= database.ref("players");
 
 //  Game Variables
   var player;
   var playerName="";
   var numPlayers;
+  var names={};
+  var turn;
+  var choices=["rock", "paper", "scissors"];
+  var winsPlayer1=0;
+  var winsPlayer2=0;
+  var lossesPlayer1=0;
+  var lossesPlayer2=0;
 
 
+/*var changeRef = database.ref("players");
+  changeRef.once("value", function(snap){
+    var exists1 = snap.child(1).exists();
+    var exists2 = snap.child(2).exists();
 
-//If player exists display player name stored in firbase in player box
-var changeRef = database.ref("players");
-changeRef.once("value", function(snap){
-  var exists1 = snap.child(1).exists();
-  var exists2 = snap.child(2).exists();
-  if (exists1){
-    $("#player-1-display").text(snap.child(1).child("name").val()); 
-  } else  {
-    $("#player-1-display").text("Waiting for player ");
-  }
-  if (exists2){
-    $("#player-2-display").text(snap.child(2).child("name").val()); 
-  } else  {
-    $("#player-2-display").text("Waiting for player ");
-  }
-});
+    if (exists1){
+      $("#player-1-display").text(snap.child(1).child("name").val()); 
+    } else  {
+      $("#player-1-display").text("Waiting for player 1");
+    }
+    if (exists2){
+      $("#player-2-display").text(snap.child(2).child("name").val()); 
+    } else  {
+      $("#player-2-display").text("Waiting for player 2");
+    }
+  });*/
 
+//  Show players in player boxes when a player has been added
+  playerRef.on("child_added", function(childSnapshot){
+    var key = childSnapshot.key;
+    name[key] = childSnapshot.val().name;
+    $("#player-"+key+"-display").text(name[key]);
+  });
+
+//  Remove player when disconnected
+  playerRef.on("child_removed", function(childSnapshot){
+    var key = childSnapshot.key;
+    // show player disconnected in chatbox
+    disconnectMessage(key);
+    // Remove player name from DOM
+    $("#player-"+key+"-display").text("Waiting for player "+ key);
+    $("#numWins-"+key).text("");
+    $("#numLosses-"+key).text("");
+    $("#player-"+key+"-rock").empty();
+    $("#player-"+key+"-paper").empty();
+    $("#player-"+key+"-paper").empty();
+  });
 
 //  From user form create new player in Firebase
 $("#start-button").on("click", function(event){
@@ -79,14 +106,12 @@ function addPlayer(){
         // Start turn to 1
         database.ref("turn").set(1);
     }
-   
   });
 
 }
 
 //  Show player number greeting and add player to firebase
 function playerNumber(player){
-  alert("#");
   $("#game-info").text("Hello " + playerName + ", you are player number " + player);
   var playerRef= database.ref("players").child(player);
   playerRef.onDisconnect().remove();
@@ -116,24 +141,20 @@ function playerNumber(player){
 
   
 //------Chat Section -----------------//
+
+function disconnectMessage(key){
+  var disconnect={
+    name: name[key].val(),
+    text: "has disconnected"
+  }
+  database.ref("chat").push(disconnect);
+}
+
   var messageField = $('#messageInput');
   var nameField = $('#name-input');
   var messageList = $('.messages');
 
-    function addMessage(data) {
-    var username = data.name || 'anonymous';
-    var message = data.text;
 
-    // Create an element
-    var nameElement = $('<strong>').text(username + ":");
-    var messageElement = $('<li>').text(message).prepend(nameElement);
-
-    // Add the message to the DOM
-    messageList.append(messageElement);
-
-    // Scroll to the bottom of the message list
-    messageList[0].scrollTop = messageList[0].scrollHeight;
-  }
     // Listen for the form submit
   $('.chat').on('submit',function(e) {
 
@@ -161,3 +182,18 @@ function playerNumber(player){
     // Get data from returned
     addMessage(snapshot.val());
   });
+
+  function addMessage(data) {
+    var username = data.name || 'anonymous';
+    var message = data.text;
+
+    // Create an element
+    var nameElement = $('<strong>').text(username + ":");
+    var messageElement = $('<li>').text(message).prepend(nameElement);
+
+    // Add the message to the DOM
+    messageList.append(messageElement);
+
+    // Scroll to the bottom of the message list
+    messageList[0].scrollTop = messageList[0].scrollHeight;
+  }

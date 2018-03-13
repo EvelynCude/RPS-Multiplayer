@@ -134,21 +134,13 @@ button{
   color: white;
 }
 
-#nameInput{
-  border: 1px gray ridge;
-  padding-left: 5px;
-  background-color: #050505;
-  color: white;
-  height: 25px;
-  width: 20%;
-}
 #messageInput{
   border: 1px gray ridge;
   padding-left: 5px;
   background-color: #050505;
   color: white;
   height: 25px;
-  width: 70%;
+  width: 93%;
 }
 #submit-button {
   border: none;

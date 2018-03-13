@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Test</title>
+	<title>Rock Paper Scissors</title>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--Reset CSS-->
@@ -41,11 +41,11 @@
         <div class="col-sm-4">
             <div class="player-box" id="player-box-one">
                 <p id="player-1-display">Waiting for player 1</p>
-                <div class="choice" id="player-one-rock" align="center">Rock</div>
-                <div class="choice" id="player-one-paper" align="center">Paper</div>
-                <div class="choice" id="player-one-scissors" align="center">Scissors</div>
-                <div class="wins">Wins: <span id="numWins-one">10</span></div>
-                <div class="losses">Losses: <span id="numWins-one">12</span>
+                <div class="choice" id="player-1-rock" align="center">Rock</div>
+                <div class="choice" id="player-1-paper" align="center">Paper</div>
+                <div class="choice" id="player-1-scissors" align="center">Scissors</div>
+                <div class="wins">Wins: <span id="numWins-1"></span></div>
+                <div class="losses">Losses: <span id="nunLosses-1"></span>
                 </div>
             </div>
         </div>
@@ -57,11 +57,11 @@
         <div class="col-sm-4">
             <div class="player-box" id="player-box-two">
                 <p id="player-2-display" align="right">Waiting for player 2</p>
-                <div class="choice" id="player-two-rock" align="center">Rock</div>
-                <div class="choice" id="player-two-paper" align="center">Paper</div>
-                <div class="choice" id="player-two-scissors" align="center">Scissors</div>
-                <div class="wins">Wins: <span id="numWins-one">10</span></div>
-                <div class="losses">Losses: <span id="numWins-one">12</span>
+                <div class="choice" id="player-2-rock" align="center">Rock</div>
+                <div class="choice" id="player-2-paper" align="center">Paper</div>
+                <div class="choice" id="player-2-scissors" align="center">Scissors</div>
+                <div class="wins">Wins: <span id="numWins-2"></span></div>
+                <div class="losses">Losses: <span id="numLosses-2"></span>
                 </div>
             </div>
         </div>
@@ -70,14 +70,14 @@
 <div class="container" id="chat-container">
     <div class="row" id="chat-box">
         <p>CHATBOX</p>
-        <!--chat panel here-->
+        <!--chat box here-->
         <div class="messagesWrap">
             <ul class="messages"></ul>
             
         </div>
         <div id="message-input">
             <form action="" class="chat">
-                <input type='text' id='nameInput' placeholder='Username' required maxlength=10> 
+                
                 <input type='text' id='messageInput'  placeholder='Type a message...' required maxlength=140>
                 <input id="submit-button" type="submit" value="Send">
             </form>
