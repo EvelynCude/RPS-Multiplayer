@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Test</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Reset CSS-->
+    <link rel="stylesheet" type="text/css" href="css/reset.css">
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <!--Google Fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <div class="page-header" id="shadow" align="center">
+        <h1>Rock Paper Scissors</h1>
+        <h2>Let's settle this like adults!</h2>
+    </div>
+    <div id="start-info" align="center">
+        <!--start form here-->
+        <form action="" class="start-form">
+            <div class="input-group">
+                <input type="text" class="form-control" id="name-input" placeholder="Name...">
+                <span class="input-group-btn">
+                <button class="btn btn-default" id="start-button" type="submit">Start</button>
+              </span>
+            </div>
+        </form>
+    <div id="game-info" align="center">
+    </div>
+    </div>
+</div>
+
+<div class="container" id="game-container">
+    <div class="row" id="game-section">
+        <div class="col-sm-4">
+            <div class="player-box" id="player-box-one">
+                <p id="player-1-display">Waiting for player 1</p>
+                <div class="choice" id="player-one-rock" align="center">Rock</div>
+                <div class="choice" id="player-one-paper" align="center">Paper</div>
+                <div class="choice" id="player-one-scissors" align="center">Scissors</div>
+                <div class="wins">Wins: <span id="numWins-one">10</span></div>
+                <div class="losses">Losses: <span id="numWins-one">12</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="player-box" id="game-box">
+                <div id="winning-player" align="center">Username Wins!</div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="player-box" id="player-box-two">
+                <p id="player-2-display" align="right">Waiting for player 2</p>
+                <div class="choice" id="player-two-rock" align="center">Rock</div>
+                <div class="choice" id="player-two-paper" align="center">Paper</div>
+                <div class="choice" id="player-two-scissors" align="center">Scissors</div>
+                <div class="wins">Wins: <span id="numWins-one">10</span></div>
+                <div class="losses">Losses: <span id="numWins-one">12</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container" id="chat-container">
+    <div class="row" id="chat-box">
+        <p>CHATBOX</p>
+        <!--chat panel here-->
+        <div class="messagesWrap">
+            <ul class="messages"></ul>
+            
+        </div>
+        <div id="message-input">
+            <form action="" class="chat">
+                <input type='text' id='nameInput' placeholder='Username' required maxlength=10> 
+                <input type='text' id='messageInput'  placeholder='Type a message...' required maxlength=140>
+                <input id="submit-button" type="submit" value="Send">
+            </form>
+        </div>    
+    </div>
+
+</div>
+
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
+<script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
+<script src="javascript/app.js"></script>
+
+</html>
