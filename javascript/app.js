@@ -1,5 +1,5 @@
 //  Hide greeting on load
-$("#game-info").hide();
+  $("#game-info").hide();
 
 //  Initialize Firebase
   var config = {
@@ -53,26 +53,8 @@ $("#game-info").hide();
     }
   });*/
 
-//  Show players in player boxes when a player has been added
-  playerRef.on("child_added", function(childSnapshot){
-    var key = childSnapshot.key;
-    name[key] = childSnapshot.val().name;
-    $("#player-"+key+"-display").text(name[key]);
-  });
 
-//  Remove player when disconnected
-  playerRef.on("child_removed", function(childSnapshot){
-    var key = childSnapshot.key;
-    // show player disconnected in chatbox
-    disconnectMessage(key);
-    // Remove player name from DOM
-    $("#player-"+key+"-display").text("Waiting for player "+ key);
-    $("#numWins-"+key).text("");
-    $("#numLosses-"+key).text("");
-    $("#player-"+key+"-rock").empty();
-    $("#player-"+key+"-paper").empty();
-    $("#player-"+key+"-paper").empty();
-  });
+
 
 //  From user form create new player in Firebase
 $("#start-button").on("click", function(event){
@@ -109,6 +91,38 @@ function addPlayer(){
   });
 
 }
+//  Show players in player boxes when a player has been added
+  playerRef.on("child_added", function(childSnapshot){
+    var key = childSnapshot.key;
+    names[key] = childSnapshot.val().name;
+    console.log(names[key]);
+    $("#player-"+key+"-display").text(names[key]);
+  });
+
+//  Remove player when disconnected
+  playerRef.on("child_removed", function(childSnapshot){
+    var key = childSnapshot.key;
+    console.log(key);
+    // show player disconnected in chatbox
+    disconnectMessage(key);
+    // Remove player name from DOM
+    $("#player-"+key+"-display").text("Waiting for player "+ key);
+    $(".choice").empty();
+    $("#numWins-1").text("");
+    $("#numLosses-1").text("");
+    $("#numWins-2").text("");
+    $("#numLosses-2").text("");
+  /*$("#numWins-1").text("");
+    $("#numLosses-1").text("");
+    $("#player-1-rock").empty();
+    $("#player-1-paper").empty();
+    $("#player-1-scissors").empty();
+    $("#numWins-2").text("");
+    $("#numLosses-2").text("");
+    $("#player-2-rock").empty();
+    $("#player-2-paper").empty();
+    $("#player-2-scissors").empty(); */
+  });
 
 //  Show player number greeting and add player to firebase
 function playerNumber(player){
@@ -120,14 +134,15 @@ function playerNumber(player){
     wins: 0,
     losses: 0
   });
-    playerRef.on("value", function(snap){
-      $("#player-"+player+"-display").text(snap.child("name").val());
-    });
-  var changeRef = database.ref("players");
-    changeRef.on("value", function(snap){
-      $("#player-"+player+"-display").text(snap.child(player).child("name").val());
-    });
 }
+
+//  Who's turn
+  database.ref("turn").on("value", function(snapshot){
+    var turn=snapshot.val();
+    if(turn == 1 ){
+      $
+    }
+  });
 
 
 
@@ -144,7 +159,7 @@ function playerNumber(player){
 
 function disconnectMessage(key){
   var disconnect={
-    name: name[key].val(),
+    name: names[key],
     text: "has disconnected"
   }
   database.ref("chat").push(disconnect);
