@@ -236,6 +236,8 @@ function gameLogic(){
     player2wins = player2.wins;
     player2losses = player2.losses;
     //  show stored player values on both players' DOM
+    $("#set-choice-1").show();
+    $("#set-choice-2").show();
     $("#set-choice-1").text(player1choice);
     $("#numWins-1").text(player1wins);
     $("#numLosses-1").text(player1wins);
