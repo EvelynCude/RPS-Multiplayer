@@ -1,5 +1,7 @@
-//  Hide greeting on load
+//  Hide unessary features on load
   $("#game-info").hide();
+  $("#set-choice-1").hide();
+  $("#set-choice-2").hide();
 
 //  Initialize Firebase
   var config = {
@@ -20,8 +22,12 @@
 
   console.log(database);
 
-// database.ref("players") used frequently.... store in variable
+// .ref("") used frequently.... store in variable
   var playerRef= database.ref("players");
+  var turnRef= database.ref("turn");
+  var numRef;
+  
+
 
 //  Game Variables
   var player;
@@ -29,31 +35,13 @@
   var numPlayers;
   var names={};
   var turn;
-  var choices=["rock", "paper", "scissors"];
-  var winsPlayer1=0;
-  var winsPlayer2=0;
-  var lossesPlayer1=0;
-  var lossesPlayer2=0;
-
-
-/*var changeRef = database.ref("players");
-  changeRef.once("value", function(snap){
-    var exists1 = snap.child(1).exists();
-    var exists2 = snap.child(2).exists();
-
-    if (exists1){
-      $("#player-1-display").text(snap.child(1).child("name").val()); 
-    } else  {
-      $("#player-1-display").text("Waiting for player 1");
-    }
-    if (exists2){
-      $("#player-2-display").text(snap.child(2).child("name").val()); 
-    } else  {
-      $("#player-2-display").text("Waiting for player 2");
-    }
-  });*/
-
-
+  var player1wins;
+  var player2wins;
+  var player1losses;
+  var player2losses;
+  var player1choice="";
+  var player2choice="";
+  var click="";
 
 
 //  From user form create new player in Firebase
@@ -78,15 +66,15 @@ function addPlayer(){
 
     if (numPlayers == 0) {
       // Sets player to 1
-      var player = 1;
+      player = 1;
       playerNumber(player); 
     } else if (numPlayers == 1) {
         // Sets player to 2
-        var player = 2;
+        player = 2;
         // Show player name in player box one
         playerNumber(player);
         // Start turn to 1
-        database.ref("turn").set(1);
+        turnRef.set(1);
     }
   });
 
@@ -107,55 +95,204 @@ function addPlayer(){
     disconnectMessage(key);
     // Remove player name from DOM
     $("#player-"+key+"-display").text("Waiting for player "+ key);
-    $(".choice").empty();
+    $(".choice").hide();
     $("#numWins-1").text("");
     $("#numLosses-1").text("");
     $("#numWins-2").text("");
     $("#numLosses-2").text("");
-  /*$("#numWins-1").text("");
-    $("#numLosses-1").text("");
-    $("#player-1-rock").empty();
-    $("#player-1-paper").empty();
-    $("#player-1-scissors").empty();
-    $("#numWins-2").text("");
-    $("#numLosses-2").text("");
-    $("#player-2-rock").empty();
-    $("#player-2-paper").empty();
-    $("#player-2-scissors").empty(); */
   });
 
 //  Show player number greeting and add player to firebase
 function playerNumber(player){
   $("#game-info").text("Hello " + playerName + ", you are player number " + player);
-  var playerRef= database.ref("players").child(player);
-  playerRef.onDisconnect().remove();
-  playerRef.set({
+  numRef= database.ref("players").child(player);
+  numRef.onDisconnect().remove();
+  numRef.set({
     name: playerName,
     wins: 0,
-    losses: 0
+    losses: 0,
   });
 }
 
 //  Who's turn
-  database.ref("turn").on("value", function(snapshot){
+  turnRef.on("value", function(snapshot){
     var turn=snapshot.val();
     if(turn == 1 ){
-      $
+      $(".choice").hide();
+      $("#numWins-1").text("");
+      $("#numLosses-1").text("");
+      $("#numWins-2").text("");
+      $("#numLosses-2").text("");
+      turn1();
+    }
+    else if(turn == 2){
+      turn2();
+    }
+    else if(turn == 3){
+      turn3();
     }
   });
 
+// What to display on user DOM on turn one
+function turn1(){
+  $("#game-box").addClass("player-box");
+  // Add player one box color/highlight
+  $("#player-box-one").removeClass("player-box");
+  $("#player-box-one").addClass("player-turn-box");
+  if (player == 1){
+    $("#player-1-rock").show();
+    $("#player-1-paper").show();
+    $("#player-1-scissors").show();
+    $("#player-1-scissors").show();
+      $(".choice").click(function userClick(){
+        click = $(this).attr("data-choice");
+        $("#player-1-rock").hide();
+        $("#player-1-paper").hide();
+        $("#player-1-scissors").hide();
+        $("#player-1-scissors").hide();
+        saveChoice();
+   });
+  }
+  messageT1();
+}
+
+// What to display on user DOM on turn two
+function turn2(){
+  // Remove player one box color/highlight
+  $("#player-box-one").removeClass("player-turn-box");
+  $("#player-box-one").addClass("player-box");
+  // Add player two box color/highlight
+  $("#player-box-two").removeClass("player-box");
+  $("#player-box-two").addClass("player-turn-box");
+  if (player == 1){
+    $("#player-1-rock").hide();
+    $("#player-1-paper").hide();
+    $("#player-1-scissors").hide();
+    $("#player-1-scissors").hide();
+  }
+  else if (player ==2){
+    $("#player-2-rock").show();
+    $("#player-2-paper").show();
+    $("#player-2-scissors").show();
+    $("#player-2-scissors").show(); 
+      $(".choice").click(function userClick(){
+        click = $(this).attr("data-choice");
+        $("#player-2-rock").hide();
+        $("#player-2-paper").hide();
+        $("#player-2-scissors").hide();
+        $("#player-2-scissors").hide();
+        saveChoice();
+   });   
+  }
+  messageT2();
+}
+
+//  What to do after first round (Turn 3)
+function turn3(){
+  $("#game-info").text("");
+  // Remove player two box color/highlight
+  $("#player-box-two").removeClass("player-turn-box");
+  $("#player-box-two").addClass("player-box");
+  // Add Game Results Box color/highlight
+  $("#game-box").removeClass("player-box");
+  $("#game-box").addClass("player-turn-box");
+  if (player == 1){
+    $("#player-1-rock").hide();
+    $("#player-1-paper").hide();
+    $("#player-1-scissors").hide();
+    $("#player-1-scissors").hide();
+  }
+  else if (player ==2){
+    $("#player-2-rock").hide();
+    $("#player-2-paper").hide();
+    $("#player-2-scissors").hide();
+    $("#player-2-scissors").hide();    
+  }
+  gameLogic();
+}
+
+function saveChoice(){
+  numRef.update({
+    choice: click
+  });
+  $("#set-choice-" + player).show();
+  $("#set-choice-" + player).text(click);
+  turnRef.once("value", function(snapshot){
+    turn = snapshot.val();
+    turn ++;
+    turnRef.set(turn);
+  });
+
+}
+
+function gameLogic(){
+  playerRef.once("value", function(snapshot){
+    var player1 = snapshot.val()[1];
+    var player2 = snapshot.val()[2];
+    player1choice = player1.choice; //Player one choice = player1choice
+    player1wins = player1.wins;
+    player1losses = player1.losses;
+    player2choice = player2.choice; //Player two choice = player2choice
+    player2wins = player2.wins;
+    player2losses = player2.losses;
+    //  show stored player values on both players' DOM
+    $("#set-choice-1").text(player1choice);
+    $("#numWins-1").text(player1wins);
+    $("#numLosses-1").text(player1wins);
+    $("#set-choice-2").text(player2choice);
+    $("#numWins-2").text(player2wins);
+    $("#numLosses-2").text(player2wins);
+
+
+      if(player1choice=="Rock" && player2choice=="Scissors")
+        $("#winning-player").text("Player 1 wins!");
+
+      if(player1choice=="Rock" && player2choice=="Paper")
+        $("#winning-player").text("Player 2 wins!");
+
+      if(player1choice=="Scissors" && player2choice=="Rock")
+        $("#winning-player").text("Player 2 wins!");
+      
+      if(player1choice=="Scissors" && player2choice=="Paper")
+        $("#winning-player").text("Player 2 wins!");
+      
+      if(player1choice=="Paper" && player2choice=="Rock")
+        $("#winning-player").text("Player 1 wins!");
+      
+      if(player1choice=="Paper" && player2choice=="Scissors")
+        $("#winning-player").text("Player 2 wins!");
+      
+      if(player1choice==player2choice)
+        $("#winning-player").text("Tie!");
+ })
+}
 
 
 
+//--------Game Messages Section---------------//
+function messageT1(){
+  if (player ==1){
+    $("#game-info").text("It's your turn!");
+  }
+  else if (player ==2){
+    $("#game-info").text("Waiting for " + names[1] +" to choose.");
+  }
+}
 
-
-
+function messageT2(){
+  if (player ==1){
+    $("#game-info").text("Waiting for " + names[2] +" to choose.");
+  }
+  else if (player ==2){
+    $("#game-info").text("It's your turn!");
+  }
+}
 
 
 
 
   
-//------Chat Section -----------------//
+//-------------Chat Section -----------------//
 
 function disconnectMessage(key){
   var disconnect={

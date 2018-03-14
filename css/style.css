@@ -45,6 +45,7 @@ button{
   text-align: center;
   color: white;
 }
+
 .form-control{
   border: 2px #0ff ridge;
   box-shadow: 0 0 20px #0ff;
@@ -78,6 +79,17 @@ button{
   margin: 25px;
   padding: 10px;
 }
+.player-turn-box{
+  background-color: #3a3a3a;
+  color: white;
+  border: 4px #f0f solid;
+  border-radius: 10px;
+  box-shadow: 0 0 2px white, 0 0 15px #f0f;
+  height: 240px;
+  margin: 25px;
+  padding: 10px;
+
+}
 .choice{
   font-size: 30px;
   margin: 10px;
@@ -88,7 +100,27 @@ button{
     1px 1px 2px black, 
     0 0 20px #0ff;
     cursor: pointer;
-
+}
+#set-choice-1{
+  font-size: 30px;
+  margin: 10px;
+  height: 80px;
+  padding-top: 40px;
+  text-shadow: 
+    1px 1px 2px black, 
+    0 0 20px #0ff;
+}
+#set-choice-2{
+  font-size: 30px;
+  margin: 10px;
+  height: 80px;
+  padding-top: 20px;
+  text-shadow: 
+    1px 1px 2px black, 
+    0 0 20px #0ff;
+}
+.choices{
+  min-height: 150px;
 }
 
 #winning-player{

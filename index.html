@@ -41,9 +41,12 @@
         <div class="col-sm-4">
             <div class="player-box" id="player-box-one">
                 <p id="player-1-display">Waiting for player 1</p>
-                <div class="choice" id="player-1-rock" align="center">Rock</div>
-                <div class="choice" id="player-1-paper" align="center">Paper</div>
-                <div class="choice" id="player-1-scissors" align="center">Scissors</div>
+                <div class="choices">
+                    <div class="choice" id="player-1-rock" data-choice='Rock' align="center">Rock</div>
+                    <div class="choice" id="player-1-paper" data-choice='Paper' align="center">Paper</div>
+                    <div class="choice" id="player-1-scissors" data-choice='Scissors' align="center">Scissors</div>
+                    <div id="set-choice-1" align="center"></div>
+                </div>
                 <div class="wins">Wins: <span id="numWins-1"></span></div>
                 <div class="losses">Losses: <span id="nunLosses-1"></span>
                 </div>
@@ -57,9 +60,12 @@
         <div class="col-sm-4">
             <div class="player-box" id="player-box-two">
                 <p id="player-2-display" align="right">Waiting for player 2</p>
-                <div class="choice" id="player-2-rock" align="center">Rock</div>
-                <div class="choice" id="player-2-paper" align="center">Paper</div>
-                <div class="choice" id="player-2-scissors" align="center">Scissors</div>
+                <div class="choices">
+                    <div class="choice" id="player-2-rock" data-choice='Rock' align="center">Rock</div>
+                    <div class="choice" id="player-2-paper" data-choice='Paper' align="center">Paper</div>
+                    <div class="choice" id="player-2-scissors" data-choice='Scissors' align="center">Scissors</div>
+                    <div id="set-choice-2" align="center"></div>
+                </div>
                 <div class="wins">Wins: <span id="numWins-2"></span></div>
                 <div class="losses">Losses: <span id="numLosses-2"></span>
                 </div>
