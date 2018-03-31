@@ -1,15 +1,12 @@
 # RPS-Multiplayer
 Rock-Paper-Scissors Multiplayer Game with Chat (using Firebase and JQuery)
 
+Live link:
+https://evelyncude.github.io/RPS-Multiplayer/
+
 Assigment Instructions
 
-
-
-
 Create a game that suits this user story:
-
--
-
 Only two users can play at the same time.
 
 -Both players pick either rock, paper or scissors. 
